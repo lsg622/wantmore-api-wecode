@@ -98,7 +98,6 @@ describe('UsersService', () => {
       jest.spyOn(repository, 'save').mockResolvedValue(updatedUser);
 
       const result = await service.update(id, updateUser);
-
       expect(repository.findOne).toBeCalledWith({ where: { id } });
       expect(repository.save).toBeCalledWith(updatedUser);
       expect(result).toEqual(updatedUser);
