@@ -6,10 +6,12 @@ import {
   Patch,
   Param,
   Delete,
+  HttpStatus,
 } from '@nestjs/common';
 import { TeamsService } from '../services/teams.service';
-import { CreateTeamDto } from '../dtos/create-team.dto';
-import { UpdateTeamDto } from '../dtos/update-team.dto';
+import { CreateTeamDto } from '../dtos/create.team.dto';
+import { UpdateTeamDto } from '../dtos/update.team.dto';
+import { ApiResponse } from 'src/common/response/api.response';
 
 @Controller('teams')
 export class TeamsController {
@@ -17,7 +19,8 @@ export class TeamsController {
 
   @Post()
   create(@Body() createTeamDto: CreateTeamDto) {
-    return this.teamsService.create(createTeamDto);
+    const team = this.teamsService.create(createTeamDto);
+    return new ApiResponse(HttpStatus.CREATED, team);
   }
 
   @Get()

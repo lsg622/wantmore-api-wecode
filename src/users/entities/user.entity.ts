@@ -1,5 +1,5 @@
-import { CommonEntity } from 'src/common/entity/common.entity';
-import { Team } from 'src/teams/entities/team.entity';
+import { CommonEntity } from '../../common/entity/common.entity';
+import { Team } from '../../teams/entities/team.entity';
 import { Column, Entity, ManyToOne } from 'typeorm';
 
 @Entity()
