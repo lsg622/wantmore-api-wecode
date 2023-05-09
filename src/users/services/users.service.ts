@@ -16,21 +16,21 @@ export class UsersService {
       password: password,
     });
 
-    return this.repository.save(user);
+    return await this.repository.save(user);
   }
 
   async findAll(): Promise<User[]> {
-    return this.repository.find();
+    return await this.repository.find();
   }
 
   async findOne(id: number): Promise<User> {
-    return this.repository.findOneBy({ id });
+    return await this.repository.findOne({ where: { id } });
   }
 
   async update(id: number, updateUserDto: CreateUserDto): Promise<User> {
     const { name, email, password } = updateUserDto;
 
-    const user = await this.repository.findOneBy({ id });
+    const user = await this.findOne(id);
     user.name = name;
     user.email = email;
     user.password = password;
