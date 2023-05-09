@@ -1,23 +1,19 @@
 import { Injectable } from '@nestjs/common';
 import { CreateUserDto } from '../dtos/create.user.dto';
-import { UpdateUserDto } from '../dtos/update.user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
-import { UserRepository } from '../repositories/user.repository';
 import { User } from '../entities/user.entity';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class UsersService {
-  constructor(
-    @InjectRepository(UserRepository)
-    private readonly repository: UserRepository,
-  ) {}
+  constructor(@InjectRepository(User) private repository: Repository<User>) {}
   async create(createUserDto: CreateUserDto): Promise<User> {
-    const { getName, getEmail, getPassword } = createUserDto;
+    const { _name, _email, _password } = createUserDto;
 
     const user = this.repository.create({
-      name: getName(),
-      email: getEmail(),
-      password: getPassword(),
+      name: _name,
+      email: _email,
+      password: _password,
     });
 
     return this.repository.save(user);
@@ -28,16 +24,16 @@ export class UsersService {
   }
 
   async findOne(id: number): Promise<User> {
-    return this.repository.findById(id);
+    return this.repository.findOneBy({ id });
   }
 
   async update(id: number, updateUserDto: CreateUserDto): Promise<User> {
-    const { getName, getEmail, getPassword } = updateUserDto;
+    const { _name, _email, _password } = updateUserDto;
 
-    const user = await this.repository.findById(id);
-    user.name = getName();
-    user.email = getEmail();
-    user.password = getPassword();
+    const user = await this.repository.findOneBy({ id });
+    user.name = _name;
+    user.email = _email;
+    user.password = _password;
     return this.repository.save(user);
   }
 
