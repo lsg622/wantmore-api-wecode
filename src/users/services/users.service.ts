@@ -8,12 +8,12 @@ import { Repository } from 'typeorm';
 export class UsersService {
   constructor(@InjectRepository(User) private repository: Repository<User>) {}
   async create(createUserDto: CreateUserDto): Promise<User> {
-    const { _name, _email, _password } = createUserDto;
+    const { name, email, password } = createUserDto;
 
     const user = this.repository.create({
-      name: _name,
-      email: _email,
-      password: _password,
+      name: name,
+      email: email,
+      password: password,
     });
 
     return this.repository.save(user);
@@ -28,12 +28,12 @@ export class UsersService {
   }
 
   async update(id: number, updateUserDto: CreateUserDto): Promise<User> {
-    const { _name, _email, _password } = updateUserDto;
+    const { name, email, password } = updateUserDto;
 
     const user = await this.repository.findOneBy({ id });
-    user.name = _name;
-    user.email = _email;
-    user.password = _password;
+    user.name = name;
+    user.email = email;
+    user.password = password;
     return this.repository.save(user);
   }
 
