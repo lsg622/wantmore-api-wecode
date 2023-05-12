@@ -1,16 +1,23 @@
-import { IsNotEmpty } from 'class-validator';
+import { IsNotEmpty, IsString, Matches } from 'class-validator';
 
 export class CreateUserDto {
   @IsNotEmpty()
-  name: string;
-  @IsNotEmpty()
-  email: string;
-  @IsNotEmpty()
-  password: string;
+  @IsString()
+  readonly name: string;
 
-  constructor(name: string, email: string, password: string) {
-    this.name = name;
-    this.email = email;
-    this.password = password;
-  }
+  @IsNotEmpty()
+  @IsString()
+  @Matches(/^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{7,}$/)
+  password: string;
+}
+
+export class SignInDto {
+  @IsNotEmpty()
+  @IsString()
+  readonly name: string;
+
+  @IsNotEmpty()
+  @IsString()
+  @Matches(/^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{7,}$/)
+  password: string;
 }

@@ -17,10 +17,16 @@ export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
   @Post()
-  async create(@Body() createUserDto: CreateUserDto) {
-    const createdUser = await this.usersService.create(createUserDto);
+  async createUser(@Body() createUserDto: CreateUserDto) {
+    const createdUser = await this.usersService.createUser(createUserDto);
     return new ApiResponse(HttpStatus.CREATED, createdUser);
   }
+
+  // @Post()
+  // async signInUser(@Body() signInDto: SignInDto) {
+  //   const signInUser = await this.usersService.signInUser(signInDto);
+  //   return new ApiResponse(HttpStatus.CREATED, signInUser);
+  // }
 
   @Get()
   async findAll() {
@@ -41,8 +47,8 @@ export class UsersController {
   }
 
   @Delete(':id')
-  async remove(@Param('id') id: string) {
-    await this.usersService.remove(+id);
+  async deleteUser(@Param('id') id: string) {
+    await this.usersService.deleteUser(+id);
     return new ApiResponse(HttpStatus.OK, id);
   }
 }

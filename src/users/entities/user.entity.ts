@@ -1,18 +1,13 @@
-import { CommonEntity } from '../../common/entity/common.entity';
-import { Team } from '../../teams/entities/team.entity';
-import { Column, Entity, ManyToOne } from 'typeorm';
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
-@Entity()
-export class User extends CommonEntity {
-  @Column()
+@Entity('users')
+export class User {
+  @PrimaryGeneratedColumn()
+  id: number;
+
+  @Column({ unique: true })
   name: string;
 
-  @Column()
-  email: string;
-
-  @Column()
+  @Column({ type: 'varchar' })
   password: string;
-
-  @ManyToOne(() => Team, (team) => team.users, { onDelete: 'CASCADE' })
-  team: Team;
 }
